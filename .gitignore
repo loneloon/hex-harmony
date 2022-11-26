@@ -10,3 +10,6 @@ node_modules
 
 # TS Compiled
 **/dist
+
+# TS build info
+tsconfig.tsbuildinfo
