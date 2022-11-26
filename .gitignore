@@ -1,0 +1,12 @@
+# IDE
+.idea/*
+*.iml
+
+# Logs
+*.log
+
+# Node dependency directory
+node_modules
+
+# TS Compiled
+**/dist
