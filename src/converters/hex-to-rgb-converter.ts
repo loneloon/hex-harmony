@@ -1,9 +1,4 @@
-
-interface Rgb {
-    r: number;
-    g: number;
-    b: number;
-}
+import { Rgb } from '../dtos'
 
 class HexColor {
 
@@ -56,7 +51,7 @@ class HexColor {
         }
     }
 
-    private hexStringGroupToRgbValue (hexGroup: string): number {
+    private hexStringGroupToRgbValue(hexGroup: string): number {
         return this.parseHexDigit(hexGroup.charAt(0)) * 16 + this.parseHexDigit(hexGroup.charAt(1))
     }
 }
