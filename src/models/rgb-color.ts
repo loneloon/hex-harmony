@@ -1,12 +1,20 @@
 import { Rgb } from "../dtos/rgb";
 
-class RgbColor {
+export class RgbColor {
     constructor(readonly r: number, readonly g: number, readonly b: number){
         this.validateColorInput(this.r, this.g, this.b)
     }
 
     get hex(): string {
         return this.parseDecimalToHexDigit(this.r) + this.parseDecimalToHexDigit(this.g) + this.parseDecimalToHexDigit(this.b)
+    }
+
+    get rgb(): Rgb {
+        return {
+            r: this.r,
+            g: this.g,
+            b: this.b
+        }
     }
 
     private validateColorInput(r: number, g: number, b: number): void {

@@ -1,6 +1,6 @@
 import { Rgb } from '../dtos/rgb'
 
-class HexColor {
+export class HexColor {
 
     constructor(
         readonly hex: string,
