@@ -1,6 +1,25 @@
+import { HarmonyRule } from "../dtos/harmony";
 import { Rgb } from "../dtos/rgb";
 import { HexColor } from "./hex-color";
+import _ from "lodash"
 import { RgbColor } from "./rgb-color";
+
+export const COMPLEMENTARY: HarmonyRule = {
+    colors: 2,
+    steps: [{direction: 'CCW', sector: 0.5}]
+}
+
+export const TRIADS: HarmonyRule = {
+    colors: 3,
+    steps: [{direction: 'CCW', sector: 0.33}, {direction: 'CCW', sector: 0.66}]
+}
+
+export const SQUARE: HarmonyRule = {
+    colors: 4,
+    steps: [{direction: 'CCW', sector: 0.25}, {direction: 'CCW', sector: 0.5}, {direction: 'CCW', sector: 0.75}]
+}
+
+export type ColorHarmonyRule = typeof COMPLEMENTARY | typeof TRIADS | typeof SQUARE
 
 class RgbColorWheel {
 
@@ -13,9 +32,28 @@ class RgbColorWheel {
 
     constructor(){}
 
+    public generateHarmony(sourceColor: Rgb, rule: HarmonyRule): Array<Rgb> {
+        let colors: Rgb[] = [sourceColor]
+        let stepLength: number
+
+        for (const step of rule.steps) {
+            // TechDebt: This is too inaccurate, replace ASAP
+            stepLength = Math.round(this.wheelLengthInPoints * step.sector)
+            if (step.direction == "CCW") {
+                colors.push(this.getNextPositionCcw(sourceColor, stepLength))
+            } else {
+                throw new Error("Clockwise color wheel search/traverse is not implemented yet!")
+            } 
+            
+        }
+
+        return colors
+    }
+
     // TechDebt: Create tests for this method
-    public findPosition(startPos: Rgb, stepLength: number): Rgb {
-        let currentPosition: Rgb = startPos
+    // TechDebt: Implement clockwise variant
+    public getNextPositionCcw(startPos: Rgb, stepLength: number): Rgb {
+        let currentPosition: Rgb = _.cloneDeep(startPos)
         let remainder: number = stepLength
         
         // If stepLength equals wheelLength times X, just return current position
@@ -163,3 +201,12 @@ class RgbColorWheel {
         return currentPosition
     }
 }
+
+// REMOVE TEST SNIPPET AFTER FIXING RGB-TO-HEX
+const test = new RgbColorWheel()
+const sourceColor = new HexColor("FF002B").rgb
+console.log(sourceColor)
+const testHarmony = test.generateHarmony(sourceColor, TRIADS).map((element) => {
+    return new RgbColor(element.r, element.g, element.b).hex
+})
+console.log(testHarmony)

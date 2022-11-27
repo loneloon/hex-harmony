@@ -18,25 +18,33 @@ export class RgbColor {
     }
 
     private validateColorInput(r: number, g: number, b: number): void {
+        // TechDebt: This looks wonky
         let colorValidationError = {}
-        
+        let errorFlag: boolean = false;
+
         if (r < 0 || r > 255) {
+            errorFlag = true
             Object.assign(colorValidationError, { RED: `Value should be between 0 and 255. Received ${r}` })
         }
         if (g < 0 || g > 255) {
+            errorFlag = true
             Object.assign(colorValidationError, { GREEN: `Value should be between 0 and 255. Received ${g}` })
         }
         if (b < 0 || b > 255) {
+            errorFlag = true
             Object.assign(colorValidationError, { BLUE: `Value should be between 0 and 255. Received ${b}` })
         }
 
-        throw new Error(JSON.stringify(
-            {
-                message: "Invalid color value input.",
-                validationError: colorValidationError
-            }));
+        if (errorFlag) {
+            throw new Error(JSON.stringify(
+                {
+                    message: "Invalid color value input.",
+                    validationError: colorValidationError
+                }));
+            }
     }
 
+    // BUG: Sometimes this produces stubs of hexes 4 chars/digits long
     private parseDecimalToHexDigit(decimal: number): string {
         let hexResult: string = "";
         let remainder: number = decimal;
