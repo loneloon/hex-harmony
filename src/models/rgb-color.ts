@@ -1,4 +1,4 @@
-import { Rgb } from "../dtos";
+import { Rgb } from "../dtos/rgb";
 
 class RgbColor {
     constructor(readonly r: number, readonly g: number, readonly b: number){

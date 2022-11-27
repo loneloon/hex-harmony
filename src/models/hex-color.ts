@@ -1,4 +1,4 @@
-import { Rgb } from '../dtos'
+import { Rgb } from '../dtos/rgb'
 
 class HexColor {
 
