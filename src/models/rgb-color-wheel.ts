@@ -3,9 +3,13 @@ import { HexColor } from "./hex-color";
 import { RgbColor } from "./rgb-color";
 
 class RgbColorWheel {
-    private numberOfColors: number = 7;
+
+    // TechDebt: This might be confusing for some. 
+    // By pure colors i mean the ones that are mixed from combinations of max or zero value channels
+    // i.e. pure red = (255 0 0), pure yellow = (255 255 0), etc.
+    private numberOfPureColors: number = 6;
     private maxValue: number = 255;
-    private wheelLengthInPoints: number = this.numberOfColors * this.maxValue;
+    private wheelLengthInPoints: number = this.numberOfPureColors * this.maxValue;
 
     constructor(){}
 
