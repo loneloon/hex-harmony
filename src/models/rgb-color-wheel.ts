@@ -9,135 +9,178 @@ class RgbColorWheel {
 
     constructor(){}
 
-    public async findPosition(startPos: Rgb, stepLength: number) {
-        let remainder: number = stepLength;
-        let currentPosition: Rgb = startPos;
+    public findPosition(startPos: Rgb, stepLength: number): Rgb {
+        let currentPosition: Rgb = startPos
+        let remainder: number = stepLength
+        
+        // If stepLength equals wheelLength times X, just return current position
+        if (stepLength >= this.wheelLengthInPoints && stepLength % this.wheelLengthInPoints == 0) {
+            return currentPosition
+        }
 
-        let sanityCheckCounter = 0
         while (remainder > 0) {
-            let nextPosition: Rgb | null = this.moveCursorByOnePointCcw(currentPosition)
-
-            sanityCheckCounter += 1
-
-            if (nextPosition) {
-                currentPosition = nextPosition
-                remainder -= 1
-            } else {
-                throw new Error(JSON.stringify(
-                    {message: "Couldn't find position!",
-                    startPosition: startPos,
-                    stepLength: stepLength
-                }
-                ));
-                
+            console.log(currentPosition)
+            console.log(remainder)
+            if (
+                currentPosition.r <= this.maxValue &&
+                currentPosition.g == this.maxValue &&
+                currentPosition.b == 0
+                ) 
+                { 
+                    if (remainder >= currentPosition.r) {
+                        remainder -= currentPosition.r
+                        Object.assign(currentPosition,
+                        {
+                            r: 0,
+                            g: currentPosition.g,
+                            b: currentPosition.b
+                        })
+                    } else {
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r - remainder,
+                                g: currentPosition.g,
+                                b: currentPosition.b
+                            })
+                        remainder = 0
+                    }
             }
+    
+            if (
+                currentPosition.r == this.maxValue &&
+                currentPosition.g < this.maxValue &&
+                currentPosition.b == 0
+                )
+                {
+                    if (remainder >= (this.maxValue - currentPosition.g)) {
+                        remainder -= (this.maxValue - currentPosition.g)
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r,
+                                g: this.maxValue,
+                                b: currentPosition.b
+                            })
+                    } else {
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r,
+                                g: currentPosition.g + remainder,
+                                b: currentPosition.b
+                            })
+                        remainder = 0
+                    }
+                    
+    
+            }
+    
+            if (
+                currentPosition.r == 0 &&
+                currentPosition.g == this.maxValue &&
+                currentPosition.b < this.maxValue
+                )
+                {
 
-            if (sanityCheckCounter > stepLength) {
-                throw new Error("Find position took way to many attemps, aborting process.")
+                    if (remainder >= (this.maxValue - currentPosition.b)) {
+                        remainder -= (this.maxValue - currentPosition.b)
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r,
+                                g: currentPosition.g,
+                                b: this.maxValue
+                            })
+                    } else {
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r,
+                                g: currentPosition.g,
+                                b: currentPosition.b + remainder
+                            })
+                        remainder = 0
+                    }
+    
+            }
+    
+            if (
+                currentPosition.r == 0 &&
+                currentPosition.g <= this.maxValue &&
+                currentPosition.b == this.maxValue
+                )
+                {
+                    if (remainder >= currentPosition.g) {
+                        remainder -= currentPosition.g
+                        Object.assign(currentPosition,
+                        {
+                            r: currentPosition.r,
+                            g: 0,
+                            b: currentPosition.b
+                        })
+                    } else {
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r,
+                                g: currentPosition.g - remainder,
+                                b: currentPosition.b
+                            })
+                        remainder = 0
+                    }
+    
+            }
+    
+            if (
+                currentPosition.r <= this.maxValue &&
+                currentPosition.g == 0 &&
+                currentPosition.b == this.maxValue
+                )
+                {
+                    if (remainder >= (this.maxValue - currentPosition.r)) {
+                        remainder -= (this.maxValue - currentPosition.r)
+                        Object.assign(currentPosition,
+                            {
+                                r: this.maxValue,
+                                g: currentPosition.g,
+                                b: currentPosition.b
+                            })
+                    } else {
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r + remainder,
+                                g: currentPosition.g,
+                                b: currentPosition.b
+                            })
+                        remainder = 0
+                    }
+    
+            }
+    
+            if (
+                currentPosition.r == this.maxValue &&
+                currentPosition.g == 0 &&
+                currentPosition.b <= this.maxValue
+                )
+                {
+                    if (remainder >= currentPosition.b) {
+                        remainder -= currentPosition.b
+                        Object.assign(currentPosition,
+                        {
+                            r: currentPosition.r,
+                            g: currentPosition.g,
+                            b: 0
+                        })
+                    } else {
+                        Object.assign(currentPosition,
+                            {
+                                r: currentPosition.r,
+                                g: currentPosition.g,
+                                b: currentPosition.b - remainder
+                            })
+                        remainder = 0
+                    }
+    
             }
         }
+        
+        // TechDebt: Add validation to confirm that new position != old position if it shouldn't be
+
         return currentPosition
     }
-
-    private moveCursorByOnePointCcw(position: Rgb): Rgb | null {
-        if (
-            position.r <= this.maxValue &&
-            position.g == this.maxValue &&
-            position.b == 0
-            ) 
-            { 
-                return {
-                    r: position.r - 1,
-                    g: position.g,
-                    b: position.b
-                }
-        }
-
-        if (
-            position.r == this.maxValue &&
-            position.g < this.maxValue &&
-            position.b == 0
-            )
-            {
-                return {
-                    r: position.r,
-                    g: position.g + 1,
-                    b: position.b
-                }
-
-        }
-
-        if (
-            position.r == 0 &&
-            position.g == this.maxValue &&
-            position.b < this.maxValue
-            )
-            {
-                return {
-                    r: position.r,
-                    g: position.g,
-                    b: position.b + 1
-                }
-
-        }
-
-        if (
-            position.r == 0 &&
-            position.g <= this.maxValue &&
-            position.b == this.maxValue
-            )
-            {
-                return {
-                    r: position.r,
-                    g: position.g - 1,
-                    b: position.b
-                }
-
-        }
-
-        if (
-            position.r <= this.maxValue &&
-            position.g == 0 &&
-            position.b == this.maxValue
-            )
-            {
-                return {
-                    r: position.r + 1,
-                    g: position.g,
-                    b: position.b
-                }
-
-        }
-
-        if (
-            position.r == this.maxValue &&
-            position.g == 0 &&
-            position.b <= this.maxValue
-            )
-            {
-                return {
-                    r: position.r,
-                    g: position.g,
-                    b: position.b - 1
-                }
-
-        }
-
-        console.warn(
-            JSON.stringify({
-                message: "Couldn't move cursor",
-                currentPosition: position
-            })
-        )
-        return null
-    }
 }
-
-const testWheel = new RgbColorWheel()
-const sourceColor = new HexColor("FF0000").rgb
-console.log(sourceColor)
-
-console.log(testWheel.findPosition(
-    sourceColor,
-    500
-))
