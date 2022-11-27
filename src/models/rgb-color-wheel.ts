@@ -9,6 +9,7 @@ class RgbColorWheel {
 
     constructor(){}
 
+    // TechDebt: Create tests for this method
     public findPosition(startPos: Rgb, stepLength: number): Rgb {
         let currentPosition: Rgb = startPos
         let remainder: number = stepLength
