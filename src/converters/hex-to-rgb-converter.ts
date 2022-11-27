@@ -6,7 +6,7 @@ class HexColor {
         readonly hex: string,
     ){
         if (this.hex.length != 6){
-            throw new Error(`Wrong hexadecimal input! String length is ${hex.length} instead of 6.`);
+            throw new Error(`Invalid hexadecimal input! String length is ${hex.length} instead of 6.`);
             
         }
     }
