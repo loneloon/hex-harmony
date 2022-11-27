@@ -20,8 +20,6 @@ class RgbColorWheel {
         }
 
         while (remainder > 0) {
-            console.log(currentPosition)
-            console.log(remainder)
             if (
                 currentPosition.r <= this.maxValue &&
                 currentPosition.g == this.maxValue &&
@@ -33,15 +31,11 @@ class RgbColorWheel {
                         Object.assign(currentPosition,
                         {
                             r: 0,
-                            g: currentPosition.g,
-                            b: currentPosition.b
                         })
                     } else {
                         Object.assign(currentPosition,
                             {
                                 r: currentPosition.r - remainder,
-                                g: currentPosition.g,
-                                b: currentPosition.b
                             })
                         remainder = 0
                     }
@@ -57,16 +51,12 @@ class RgbColorWheel {
                         remainder -= (this.maxValue - currentPosition.g)
                         Object.assign(currentPosition,
                             {
-                                r: currentPosition.r,
                                 g: this.maxValue,
-                                b: currentPosition.b
                             })
                     } else {
                         Object.assign(currentPosition,
                             {
-                                r: currentPosition.r,
                                 g: currentPosition.g + remainder,
-                                b: currentPosition.b
                             })
                         remainder = 0
                     }
@@ -85,15 +75,11 @@ class RgbColorWheel {
                         remainder -= (this.maxValue - currentPosition.b)
                         Object.assign(currentPosition,
                             {
-                                r: currentPosition.r,
-                                g: currentPosition.g,
                                 b: this.maxValue
                             })
                     } else {
                         Object.assign(currentPosition,
                             {
-                                r: currentPosition.r,
-                                g: currentPosition.g,
                                 b: currentPosition.b + remainder
                             })
                         remainder = 0
@@ -111,16 +97,12 @@ class RgbColorWheel {
                         remainder -= currentPosition.g
                         Object.assign(currentPosition,
                         {
-                            r: currentPosition.r,
                             g: 0,
-                            b: currentPosition.b
                         })
                     } else {
                         Object.assign(currentPosition,
                             {
-                                r: currentPosition.r,
                                 g: currentPosition.g - remainder,
-                                b: currentPosition.b
                             })
                         remainder = 0
                     }
@@ -138,15 +120,11 @@ class RgbColorWheel {
                         Object.assign(currentPosition,
                             {
                                 r: this.maxValue,
-                                g: currentPosition.g,
-                                b: currentPosition.b
                             })
                     } else {
                         Object.assign(currentPosition,
                             {
                                 r: currentPosition.r + remainder,
-                                g: currentPosition.g,
-                                b: currentPosition.b
                             })
                         remainder = 0
                     }
@@ -163,15 +141,11 @@ class RgbColorWheel {
                         remainder -= currentPosition.b
                         Object.assign(currentPosition,
                         {
-                            r: currentPosition.r,
-                            g: currentPosition.g,
                             b: 0
                         })
                     } else {
                         Object.assign(currentPosition,
                             {
-                                r: currentPosition.r,
-                                g: currentPosition.g,
                                 b: currentPosition.b - remainder
                             })
                         remainder = 0
