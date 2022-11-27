@@ -25,7 +25,7 @@ class HexColor {
         }
     }
 
-    private parseHexDigit(char: string): number {
+    private parseHexDigitToDecimal(char: string): number {
         switch (char) {
             case "A": {
                 return 10
@@ -52,6 +52,7 @@ class HexColor {
     }
 
     private hexStringGroupToRgbValue(hexGroup: string): number {
-        return this.parseHexDigit(hexGroup.charAt(0)) * 16 + this.parseHexDigit(hexGroup.charAt(1))
+        // TechDebt: Add validation for group length. Converted hex should ALWAYS be divided into 3 groups: each 2 chars long.
+        return this.parseHexDigitToDecimal(hexGroup.charAt(0)) * 16 + this.parseHexDigitToDecimal(hexGroup.charAt(1))
     }
 }

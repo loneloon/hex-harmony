@@ -6,7 +6,7 @@ class RgbColor {
     }
 
     get hex(): string {
-        return this.decimalToHexadecimal(this.r) + this.decimalToHexadecimal(this.g) + this.decimalToHexadecimal(this.b)
+        return this.parseDecimalToHexDigit(this.r) + this.parseDecimalToHexDigit(this.g) + this.parseDecimalToHexDigit(this.b)
     }
 
     private validateColorInput(r: number, g: number, b: number): void {
@@ -29,7 +29,7 @@ class RgbColor {
             }));
     }
 
-    private decimalToHexadecimal(decimal: number): string {
+    private parseDecimalToHexDigit(decimal: number): string {
         let hexResult: string = "";
         let remainder: number = decimal;
 
