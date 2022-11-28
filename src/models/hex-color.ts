@@ -51,6 +51,7 @@ export class HexColor {
         }
     }
 
+    // TechDebt: HexColor model shouldn't not be responsible for this conversion. Take it out as a separate converter
     private hexStringGroupToRgbValue(hexGroup: string): number {
         // TechDebt: Add validation for group length. Converted hex should ALWAYS be divided into 3 groups: each 2 chars long.
         return this.parseHexDigitToDecimal(hexGroup.charAt(0)) * 16 + this.parseHexDigitToDecimal(hexGroup.charAt(1))

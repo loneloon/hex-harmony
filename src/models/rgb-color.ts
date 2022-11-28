@@ -5,6 +5,7 @@ export class RgbColor {
         this.validateColorInput(this.r, this.g, this.b)
     }
 
+    // TechDebt: RgbColor model shouldn't not be responsible for this conversion. Take it out as a separate converter
     get hex(): string {
         return this.parseDecimalToHexDigit(this.r) + this.parseDecimalToHexDigit(this.g) + this.parseDecimalToHexDigit(this.b)
     }
