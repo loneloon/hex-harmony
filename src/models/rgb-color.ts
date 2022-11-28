@@ -58,8 +58,8 @@ export class RgbColor {
             hexResult = this.translateDecToHex(remainder) + hexResult
         }
 
-        if (hexResult == "0") {
-            return "00"
+        if (hexResult.length == 1) {
+            return "0" + hexResult
         } 
 
         return hexResult
