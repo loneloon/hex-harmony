@@ -54,9 +54,13 @@ export class RgbColor {
             remainder = (remainder - remainder % 16) / 16
         }
 
-        if (remainder > 0) {
+        if (remainder >= 0) {
             hexResult = this.translateDecToHex(remainder) + hexResult
         }
+
+        if (hexResult == "0") {
+            return "00"
+        } 
 
         return hexResult
     }
